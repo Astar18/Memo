@@ -8,7 +8,6 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./memo.component.css']
 })
 export class MemoComponent implements OnInit {
-  title = 'Memo Generator';
   memo = {
     title: '',
     content: '',
@@ -28,28 +27,21 @@ export class MemoComponent implements OnInit {
     this.memo.gender = event.target.value;
   }
 
-  onLocationChange(event: any): void {
-    this.memo.location = event.target.value;
-  }
-
   onBranchChange(event: any): void {
     this.memo.branch = event.target.value;
-    this.showAdditionalField = this.memo.branch === 'specificBranch'; // Reemplaza 'specificBranch' con el valor específico
+    this.showAdditionalField = this.memo.branch === 'specificBranch';
   }
 
   printMemo(): void {
     const pdf = new jspdf.jsPDF({
       orientation: 'landscape',
       unit: 'pt',
-      format: [595, 842] // Tamaño A5 en puntos (595 x 842)
+      format: 'a4'// Tamaño A5 en puntos (595 x 842)
     });
 
-    // Ocultar el resto de la página
-    document.body.classList.add('printing');
+    const memoContainer = document.getElementById('memo-container') as HTMLElement;
 
-    const pdfContent = document.getElementById('pdf-content') as HTMLElement;
-
-    html2canvas(pdfContent).then((canvas) => {
+    html2canvas(memoContainer).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
 
       // Calcular el tamaño de la imagen para que se ajuste al tamaño A5
@@ -64,11 +56,6 @@ export class MemoComponent implements OnInit {
 
       // Guardar el PDF
       pdf.save('memo.pdf');
-
-      // Mostrar el resto de la página después de generar el PDF
-      document.body.classList.remove('printing');
     });
   }
-
-
 }

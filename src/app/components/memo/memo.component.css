@@ -34,6 +34,7 @@ form textarea {
   button {
     display: none;
   }
+
 }
 
 
@@ -53,3 +54,5 @@ form textarea {
 .printing *:not(#pdf-content) {
   display: none !important;
 }
+
+
