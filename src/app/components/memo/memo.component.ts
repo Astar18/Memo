@@ -44,9 +44,12 @@ export class MemoComponent implements OnInit {
       format: [595, 842] // Tamaño A5 en puntos (595 x 842)
     });
 
-    const memoContainer = document.getElementById('memo-container') as HTMLElement;
+    // Ocultar el resto de la página
+    document.body.classList.add('printing');
 
-    html2canvas(memoContainer).then((canvas) => {
+    const pdfContent = document.getElementById('pdf-content') as HTMLElement;
+
+    html2canvas(pdfContent).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
 
       // Calcular el tamaño de la imagen para que se ajuste al tamaño A5
@@ -61,6 +64,9 @@ export class MemoComponent implements OnInit {
 
       // Guardar el PDF
       pdf.save('memo.pdf');
+
+      // Mostrar el resto de la página después de generar el PDF
+      document.body.classList.remove('printing');
     });
   }
 

@@ -35,3 +35,21 @@ form textarea {
     display: none;
   }
 }
+
+
+@media (max-width: 768px) {
+  .memo-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  input[type="text"],
+  textarea {
+    width: calc(100% - 20px);
+  }
+}
+/* Estilo para ocultar todos los elementos excepto el contenido del PDF */
+.printing *:not(#pdf-content) {
+  display: none !important;
+}

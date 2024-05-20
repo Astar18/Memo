@@ -33,7 +33,7 @@
     <button type="button" (click)="printMemo()">Generar PDF</button>
   </form>
 
-  <div class="memo">
+  <div id="pdf-content" class="pdf-content">
     <h2>{{ memo.title }}</h2>
     <p><strong>Para:</strong> {{ memo.gender }} {{ memo.recipient }}</p>
     <p><strong>Ubicación:</strong> {{ memo.location }}</p>
