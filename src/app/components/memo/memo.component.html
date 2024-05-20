@@ -1,0 +1,46 @@
+<div  id="memo-container"  class="memo-container">
+  <form (ngSubmit)="printMemo()">
+    <label for="title">Título:</label>
+    <input id="title" [(ngModel)]="memo.title" name="title" type="text" />
+
+    <label for="gender">Género:</label>
+    <select id="gender" [(ngModel)]="memo.gender" name="gender" (change)="onGenderChange($event)">
+      <option value="Sr.">Señor</option>
+      <option value="Sra.">Señora</option>
+    </select>
+
+    <label for="recipient">Para:</label>
+    <input id="recipient" [(ngModel)]="memo.recipient" name="recipient" type="text" />
+
+    <label for="location">Ubicación:</label>
+    <input id="location" [(ngModel)]="memo.location" name="location" type="text" />
+
+    <label for="branch">Sucursal:</label>
+    <select id="branch" [(ngModel)]="memo.branch" name="branch" (change)="onBranchChange($event)">
+      <option value="Sucursal 1">Sucursal 1</option>
+      <option value="Sucursal 2">Sucursal 2</option>
+      <option value="specificBranch">Sucursal Específica</option>
+    </select>
+
+    <div *ngIf="showAdditionalField">
+      <label for="additionalField">Campo Adicional:</label>
+      <input id="additionalField" [(ngModel)]="memo.additionalField" name="additionalField" type="text" />
+    </div>
+
+    <label for="content">Contenido:</label>
+    <textarea id="content" [(ngModel)]="memo.content" name="content"></textarea>
+
+    <button type="button" (click)="printMemo()">Generar PDF</button>
+  </form>
+
+  <div class="memo">
+    <h2>{{ memo.title }}</h2>
+    <p><strong>Para:</strong> {{ memo.gender }} {{ memo.recipient }}</p>
+    <p><strong>Ubicación:</strong> {{ memo.location }}</p>
+    <p><strong>Sucursal:</strong> {{ memo.branch }}</p>
+    <p><strong>Contenido:</strong> {{ memo.content }}</p>
+    <div *ngIf="showAdditionalField">
+      <p><strong>Campo Adicional:</strong> {{ memo.additionalField }}</p>
+    </div>
+  </div>
+</div>
