@@ -92,31 +92,41 @@ export class MemoComponent implements OnInit {
     this.memo.branch = branch;
     this.showAdditionalField = branch === 'specificBranch';
   }
+
   printMemo(): void {
-    const pdf = new jspdf.jsPDF({
-      orientation: 'landscape',
-      unit: 'px',
-      format: 'a4'// Tamaño A5 en puntos (595 x 842)
+    const data = document.querySelectorAll('pdf-contend'); // Cambio aquí
+    if (data) {
+      const canvasPromises = Array.from(data).map((element: any) => {
+        return html2canvas(element, {
+          scrollX: 0,
+          scrollY: 0,
+          width: element.scrollWidth,
+          height: element.scrollHeight,
+          backgroundColor: '#fff'
+        });
+      });
 
+      Promise.all(canvasPromises)
+  .then((canvases) => {
+    const pdf = new jspdf.jsPDF('landscape', 'mm', 'a4');
+    canvases.forEach((canvas, index) => {
+      const imgWidth = 297;
+      const imgHeight = 210;
+      const contentDataURL = canvas.toDataURL('image/png');
+      if (index === 0) {
+        pdf.addImage(contentDataURL, 'PNG', 10, 10, imgWidth, imgHeight);
+      } else {
+        pdf.addImage(contentDataURL, 'PNG', imgWidth + 20, 10, imgWidth, imgHeight);
+      }
     });
+    pdf.save('memo.pdf');
+  })
+  .catch((error) => {
+    console.error('Error al generar la imagen:', error);
+  });
 
-    const memoContainer = document.getElementById('pdf-content') as HTMLElement;
-
-    html2canvas(memoContainer).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-
-      // Calcular el tamaño de la imagen para que se ajuste al tamaño A5
-      const width = pdf.internal.pageSize.getWidth() / 2; // Dividir por 2 para obtener dos imágenes en la misma página
-      const height = pdf.internal.pageSize.getHeight();
-
-      // Agregar la primera imagen en la posición (0, 0)
-      pdf.addImage(imgData, 'PNG', 1, 0, width, height);
-
-      // Agregar la segunda imagen en la posición (width, 0) para que esté al lado de la primera
-      pdf.addImage(imgData, 'PNG', width, 1, width, height);
-
-      // Guardar el PDF
-      pdf.save('memo.pdf');
-    });
+    }
   }
+
+
 }
