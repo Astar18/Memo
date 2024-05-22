@@ -87,14 +87,39 @@
     <button type="button" (click)="printMemo()">Generar PDF</button>
   </form>
 
-  <div id="pdf-content" class="pdf-content">
-    <h2>{{ memo.title }}</h2>
-    <p><strong>Para:</strong> {{ memo.gender }} {{ memo.recipient }}</p>
-    <p><strong>Ubicación:</strong> {{ memo.location }}</p>
-    <p><strong>Sucursal:</strong> {{ memo.branch }}</p>
-    <p><strong>Contenido:</strong> {{ memo.content }}</p>
-    <div *ngIf="showAdditionalField">
-      <p><strong>Campo Adicional:</strong> {{ memo.additionalField }}</p>
+  <div class="pdf-container">
+    <!-- Contenido original -->
+    <div id="pdf-content" class="pdf-content">
+      <div class="centered">
+        <h2>{{ memo.title }}</h2>
+        <p><strong>Para:</strong> {{ memo.sucursal }} {{ memo.encargado }}</p>
+        <p><strong>De:</strong> {{ memo.dirigidoD }} {{ memo.encargadoD }}</p>
+        <p><strong>Ubicación:</strong> {{ memo.location }}</p>
+        <p><strong>Sucursal:</strong> {{ memo.branch }}</p>
+        <p><strong>Fecha:</strong> {{ memo.date }}</p>
+        <p><strong>Hora:</strong> {{ memo.time }}</p>
+        <p><strong>Contenido:</strong> {{ memo.content }}</p>
+        <div *ngIf="showAdditionalField">
+          <p><strong>Campo Adicional:</strong> {{ memo.additionalField }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copia del contenido -->
+    <div class="pdf-content pdf-content-copy">
+      <div class="centered">
+        <h2>{{ memo.title }}</h2>
+        <p><strong>Para:</strong> {{ memo.sucursal }} {{ memo.encargado }}</p>
+        <p><strong>De:</strong> {{ memo.dirigidoD }} {{ memo.encargadoD }}</p>
+        <p><strong>Ubicación:</strong> {{ memo.location }}</p>
+        <p><strong>Sucursal:</strong> {{ memo.branch }}</p>
+        <p><strong>Fecha:</strong> {{ memo.date }}</p>
+        <p><strong>Hora:</strong> {{ memo.time }}</p>
+        <p><strong>Contenido:</strong> {{ memo.content }}</p>
+        <div *ngIf="showAdditionalField">
+          <p><strong>Campo Adicional:</strong> {{ memo.additionalField }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
