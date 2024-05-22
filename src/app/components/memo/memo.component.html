@@ -1,16 +1,70 @@
-<div  id="memo-container"  class="memo-container">
+<div id="memo-container" class="memo-container">
   <form (ngSubmit)="printMemo()">
-    <label for="title">Título:</label>
-    <input id="title" [(ngModel)]="memo.title" name="title" type="text" />
+    <h1>Memo</h1>
 
-    <label for="gender">Género:</label>
-    <select id="gender" [(ngModel)]="memo.gender" name="gender" (change)="onGenderChange($event)">
-      <option value="Sr.">Señor</option>
-      <option value="Sra.">Señora</option>
+    <label for="sucursal">Dirigido a Sucursal o Departamento:</label>
+    <select id="sucursal" [(ngModel)]="memo.sucursal" name="sucursal" (change)="onSucursal($event)">
+      <option value="Dilipa Villaflora">Sur</option>
+      <option value="Dilipa Carrión">Carrión</option>
+      <option value="Dilipa Portoviejo">Portoviejo</option>
+      <option value="Ventas Externas">Ventas Externas</option>
+      <option value="Centro de Acopio">Acopio</option>
+      <option value="Dilipa Oficinas">Oficinas</option>
+      <option value="Dilipa Santa Clara">Universidad</option>
+      <option value="Dilipa Tumbaco">Tumbaco 1</option>
+      <option value="Dilipa Tumbaco 2">Tumbaco 2</option>
+      <option value="Dilipa Ambato">Ambato</option>
+      <option value="Dilipa Ibarra">Ibarra</option>
+      <option value="Dilipa Santo Domingo 1">Santo 1</option>
+      <option value="Dilipa Santo Domingo 2">Santo 2</option>
+      <option value="Dilipa Santo Domingo 3">Santo 3</option>
+      <option value="Dilipa Kennedy">Auto Servicio</option>
+      <option value="Dilipa Calderón">Calderón</option>
+      <option value="Dilipa Cotocollao">Cotocollao</option>
+      <option value="Sistemas">Sistemas</option>
+      <option value="Contabilidad">Contabilidad</option>
+      <option value="Recursos Humanos">Recursos Humanos</option>
+      <option value="Compras">Compras</option>
+      <option value="Marketing" id="specificRecipient">Marketing</option>
+      <option value="Otros">Otro</option>
     </select>
 
-    <label for="recipient">Para:</label>
-    <input id="recipient" [(ngModel)]="memo.recipient" name="recipient" type="text" />
+    <div *ngIf="mostrarEncargado">
+      <label for="encargado">Encargado:</label>
+      <input id="encargado" [(ngModel)]="memo.encargado" name="encargado" type="text" [readonly]="!isEncargadoEditable"  />
+    </div>
+
+    <label for="dirigidoD">De Sucursal o Departamento:</label>
+    <select id="dirigidoD" [(ngModel)]="memo.dirigidoD" name="dirigidoD" (change)="onDirigido($event)">
+      <option value="Dilipa Villaflora">Sur</option>
+      <option value="Dilipa Carrión">Carrión</option>
+      <option value="Dilipa Portoviejo">Portoviejo</option>
+      <option value="Ventas Externas">Ventas Externas</option>
+      <option value="Centro de Acopio">Acopio</option>
+      <option value="Dilipa Oficinas">Oficinas</option>
+      <option value="Dilipa Santa Clara">Universidad</option>
+      <option value="Dilipa Tumbaco">Tumbaco 1</option>
+      <option value="Dilipa Tumbaco 2">Tumbaco 2</option>
+      <option value="Dilipa Ambato">Ambato</option>
+      <option value="Dilipa Ibarra">Ibarra</option>
+      <option value="Dilipa Santo Domingo 1">Santo 1</option>
+      <option value="Dilipa Santo Domingo 2">Santo 2</option>
+      <option value="Dilipa Santo Domingo 3">Santo 3</option>
+      <option value="Dilipa Kennedy">Auto Servicio</option>
+      <option value="Dilipa Calderón">Calderón</option>
+      <option value="Dilipa Cotocollao">Cotocollao</option>
+      <option value="Sistemas">Sistemas</option>
+      <option value="Contabilidad">Contabilidad</option>
+      <option value="Recursos Humanos">Recursos Humanos</option>
+      <option value="Compras">Compras</option>
+      <option value="Marketing" id="specificRecipient">Marketing</option>
+      <option value="Otros">Otro</option>
+    </select>
+
+    <div *ngIf="mostrarEncargadoD">
+      <label for="encargadoD">Encargado:</label>
+      <input id="encargadoD" [(ngModel)]="memo.encargadoD" name="encargadoD" type="text" [readonly]="!isEncargadoEditable2" />
+    </div>
 
     <label for="location">Ubicación:</label>
     <input id="location" [(ngModel)]="memo.location" name="location" type="text" />
@@ -24,10 +78,10 @@
 
     <div *ngIf="showAdditionalField">
       <label for="additionalField">Campo Adicional:</label>
-      <input id="additionalField" [(ngModel)]="memo.additionalField" name="additionalField" type="text" />
-    </div>  
+      <input id="additionalField" [(ngModel)]="memo.additionalField" name="additionalField" type="text" read />
+    </div>
 
-    <label for="content">Contenido:</label>
+    <label for="content">Asunto:</label>
     <textarea id="content" [(ngModel)]="memo.content" name="content"></textarea>
 
     <button type="button" (click)="printMemo()">Generar PDF</button>
