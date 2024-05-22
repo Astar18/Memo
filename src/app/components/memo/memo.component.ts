@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
-import { content } from 'html2canvas/dist/types/css/property-descriptors/content';
 
 @Component({
   selector: 'app-memo',
@@ -10,108 +9,88 @@ import { content } from 'html2canvas/dist/types/css/property-descriptors/content
 })
 export class MemoComponent implements OnInit {
   memo = {
-    title: '',
+    title: 'Memo Title',
     content: '',
     recipient: '',
     encargado: '',
+    encargadoD: '',
     sucursal: '',
     location: '',
     branch: '',
-    additionalField: ''
+    additionalField: '',
+    dirigidoD: '',
+    date: '',
+    time: ''
   };
+
   showAdditionalField = false;
   mostrarEncargado = false;
+  mostrarEncargadoD = false;
+  isEncargadoEditable = false; // Added to control the readonly attribute of encargado input
+  isEncargadoEditable2 = false; // Added to control the readonly attribute of encargadoD input
+
+  private encargados: { [key: string]: string } = {
+    'Marketing': 'Ing. Alex Gordon',
+    'Dilipa Villaflora': 'Sr. John Yanez',
+    'Dilipa Carrión': 'Sra. Cristina Pilco',
+    'Dilipa Portoviejo': 'Ing. Jose Zambrano',
+    'Ventas Externas': 'Sr. Byron Mariño',
+    'Centro de Acopio': 'Sr. Miguel Yepez',
+    'Dilipa Oficinas': 'Sra. Josselyn Chavez',
+    'Dilipa Santa Clara': 'Sr. Rolando Galarza',
+    'Dilipa Tumbaco': 'Sra. Mariana Llumihucsi',
+    'Dilipa Tumbaco 2': 'Sra. Maria Llumihucsi',
+    'Dilipa Ambato': 'Sra. Maria Eugenia Andrade',
+    'Dilipa Ibarra': 'Sr. Jorge Perez',
+    'Dilipa Santo Domingo 1': 'Sra. Elizabeth Tapia',
+    'Dilipa Santo Domingo 2': 'Sr. Washigton Segura',
+    'Dilipa Santo Domingo 3': 'Sra. Marisol Briones',
+    'Dilipa Kennedy': 'Sra. Daly Ramos',
+    'Dilipa Calderón': 'Sr. Cristian Molina',
+    'Dilipa Cotocollao': 'Sra. Alexandra Heredia',
+    'Sistemas': 'Ing. Marlon Montero',
+    'Contabilidad': 'Lcda. Nelly Panchy',
+    'Recursos Humanos': 'Dra. Mariana Jacome',
+    'Compras': 'Ing. Dario Segura',
+    'Otros': ''
+  };
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.setDateTime();
+   }
 
-  onSucursal(event: any): void {
-    this.memo.sucursal = event.target.value;
-
-    if (this.memo.sucursal === 'Marketing') {
-      this.mostrarEncargado = this.memo.sucursal === 'Marketing';
-      this.memo.encargado = 'Ing. Alex Gordon';
-    }if (this.memo.sucursal === 'Dilipa Villaflora') {
-      this.memo.encargado = 'Sr. John Yanez';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Villaflora';
-    } if (this.memo.sucursal === 'Dilipa Carrión') {
-      this.memo.encargado = 'Sra. Cristina Pilco';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Carrión';
-    }if (this.memo.sucursal === 'Dilipa Portoviejo') {
-      this.memo.encargado = 'Ing. Jose Zambrano';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Portoviejo';
-    }if (this.memo.sucursal === 'Ventas Externas') {
-      this.memo.encargado = 'Sr. Byron Mariño';
-      this.mostrarEncargado = this.memo.sucursal === 'Ventas Externas';
-    }if (this.memo.sucursal === 'Centro de Acopio') {
-      this.memo.encargado = 'Sr. Miguel Yepez';
-      this.mostrarEncargado = this.memo.sucursal === 'Centro de Acopio';
-    }if (this.memo.sucursal === 'Dilipa Oficinas') {
-      this.memo.encargado = 'Sra. Josselyn Chavez';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Oficinas';
-    }if (this.memo.sucursal === 'Dilipa Santa Clara') {
-      this.memo.encargado = 'Sr. Rolando Galarza';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Santa Clara';
-    }if (this.memo.sucursal === 'Dilipa Tumbaco') {
-      this.memo.encargado = 'Sra. Mariana Llumihucsi';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Tumbaco';
-    }if (this.memo.sucursal === 'Dilipa Tumbaco 2') {
-      this.memo.encargado = 'Sra. Maria Llumihucsi';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Tumbaco 2';
-    }if (this.memo.sucursal === 'Dilipa Ambato') {
-      this.memo.encargado = 'Sra. Maria Eugenia Andrade';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Ambato';
-    }if (this.memo.sucursal === 'Dilipa Ibarra') {
-      this.memo.encargado = 'Sr. Jorge Perez';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Ibarra';
-    }if (this.memo.sucursal === 'Dilipa Santo Domingo 1') {
-      this.memo.encargado = 'Sra. Elizabeth Tapia';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Santo Domingo 1';
-    }if (this.memo.sucursal === 'Dilipa Santo Domingo 2') {
-      this.memo.encargado = 'Sr. Washigton Segura';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Santo Domingo 2';
-    }if (this.memo.sucursal === 'Dilipa Santo Domingo 3') {
-      this.memo.encargado = 'Sra. Marisol Briones';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Santo Domingo 3';
-    }if (this.memo.sucursal === 'Dilipa Kennedy') {
-      this.memo.encargado = 'Sra. Daly Ramos';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Kennedy';
-    }if (this.memo.sucursal === 'Dilipa Calderón') {
-      this.memo.encargado = 'Sr. Cristian Molina';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Calderón';
-    }if (this.memo.sucursal === 'Dilipa Cotocollao') {
-      this.memo.encargado = 'Sra. Alexandra Heredia';
-      this.mostrarEncargado = this.memo.sucursal === 'Dilipa Cotocollao';
-    }if (this.memo.sucursal === 'Sistemas') {
-      this.memo.encargado = 'Ing. Marlon Montero';
-      this.mostrarEncargado = this.memo.sucursal === 'Sistemas';
-    }if (this.memo.sucursal === 'Contabilidad') {
-      this.memo.encargado = 'Lcda. Nelly Panchy|';
-      this.mostrarEncargado = this.memo.sucursal === 'Contabilidad';
-    }if (this.memo.sucursal === 'Recursos Humanos') {
-      this.memo.encargado = 'Dra. Mariana Jacome';
-      this.mostrarEncargado = this.memo.sucursal === 'Recursos Humanos';
-    }if (this.memo.sucursal === 'Compras') {
-      this.memo.encargado = 'Ing. Dario Segura';
-      this.mostrarEncargado = this.memo.sucursal === 'Compras';
-    }if (this.memo.sucursal === 'Otros') {
-      this.memo.encargado = ' ';
-      this.mostrarEncargado = this.memo.sucursal === 'Otros' ;
-      readonly: false;
-    }
-
-
-
-}
-  onBranchChange(event: any): void {
-    this.memo.branch = event.target.value;
-    this.showAdditionalField = this.memo.branch === 'specificBranch';
+  setDateTime(): void {
+    const now = new Date();
+    this.memo.date = now.toLocaleDateString();
+    this.memo.time = now.toLocaleTimeString();
   }
-  onEncargado(event: any): void {
+  onSucursal(event: any): void {
+    const sucursal = event.target.value;
+    this.memo.sucursal = sucursal;
+    if (sucursal === 'Otros') {
+      this.memo.encargado = '';
+      this.isEncargadoEditable = true;
+    } else {
+      this.memo.encargado = this.encargados[sucursal] || '';
+      this.isEncargadoEditable = false;
+    }
+    this.mostrarEncargado = !!this.memo.encargado || this.isEncargadoEditable;
+  }
 
-    this.memo.recipient = event.target.value;
-    this.showAdditionalField = this.memo.recipient === 'specificRecipient';
+  onDirigido(event: any): void {
+    const dirigidoD = event.target.value;
+    this.memo.dirigidoD = dirigidoD;
+    this.isEncargadoEditable2 = dirigidoD === 'Otros'; // Simplificar la lógica
+    this.memo.encargadoD = this.isEncargadoEditable2 ? '' : this.encargados[dirigidoD] || '';
+    this.mostrarEncargadoD = !!this.memo.encargadoD || this.isEncargadoEditable2;
+  }
+
+  onBranchChange(event: any): void {
+    const branch = event.target.value;
+    this.memo.branch = branch;
+    this.showAdditionalField = branch === 'specificBranch';
   }
   printMemo(): void {
     const pdf = new jspdf.jsPDF({
