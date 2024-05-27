@@ -5,38 +5,54 @@
   box-sizing: border-box;
 }
 
-form {
-  margin-bottom: 20px;
+.form-group {
+  margin-bottom: 10px;
 }
 
-form label {
+.form-group label {
+  margin-bottom: 5px;
   display: block;
-  margin: 5px 0;
 }
 
-form input,
-form select,
-form textarea {
-  width: 100%;
-  margin: 5px 0 10px 0;
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+  width: calc(100% - 20px);
   padding: 8px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 
-.memo {
+.pdf-container {
+  display: flex;
+  justify-content: space-between;
   border: 1px solid #ccc;
-  padding: 10px;
-  margin: 20px 0;
+  padding: 5px;
+  margin: 5px 0;
   box-sizing: border-box;
+}
+
+.pdf-content-copy {
+  position: absolute;
+  top: -10000px;
+  left: -10000px;
+}
+
+.pdf-container label {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.pdf-container input[type="checkbox"] {
+  margin-right: 1px;
 }
 
 @media print {
   button {
     display: none;
   }
-
 }
-
 
 @media (max-width: 768px) {
   .memo-container {
@@ -45,14 +61,8 @@ form textarea {
 }
 
 @media (max-width: 576px) {
-  input[type="text"],
-  textarea {
+  .form-group input[type="text"],
+  .form-group textarea {
     width: calc(100% - 20px);
   }
 }
-/* Estilo para ocultar todos los elementos excepto el contenido del PDF */
-.printing *:not(#pdf-content) {
-  display: none !important;
-}
-
-
