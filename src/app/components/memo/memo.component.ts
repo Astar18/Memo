@@ -20,6 +20,9 @@ export class MemoComponent implements OnInit {
     encargado: '',
     encargadoD: '',
     sucursal: '',
+    encargado: '',
+    encargadoD: '',
+    sucursal: '',
     location: '',
     branch: '',
     additionalField: '',
@@ -40,6 +43,7 @@ export class MemoComponent implements OnInit {
     rolloPrecio: '',
     rolloSeguridad: '',
   };
+
 
   showAdditionalField = false;
   showAdditionalFieldForSistemas = false;
@@ -116,6 +120,9 @@ export class MemoComponent implements OnInit {
 }
 
   onBranchChange(event: any): void {
+    const branch = event.target.value;
+    this.memo.branch = branch;
+    this.showAdditionalField = branch === 'specificBranch';
     const branch = event.target.value;
     this.memo.branch = branch;
     this.showAdditionalField = branch === 'specificBranch';
