@@ -107,26 +107,61 @@
       <label for="rolloSeguridad"><input type="checkbox" />Rollo de Seguridad:</label>
       <input id="rolloSeguridad" [(ngModel)]="memo.rolloSeguridad" name="rolloSeguridad" type="text">
     </div>
-
+    <!-- Campo Input asunto -->
     <div class="form-group">
-    <label for="content">Asunto:</label>
-    <textarea id="content" [(ngModel)]="memo.content" name="content"></textarea>
-      </div>
+      <label for="content">Asunto:</label>
+      <textarea id="content" [(ngModel)]="memo.content" name="content" (input)="onInput($event)" ></textarea>
+    </div>
+
+
     <button type="button" (click)="printMemo()">Generar PDF</button>
   </form>
-
   <div class="pdf-container">
     <!-- Contenido original -->
     <div id="pdf-content-left" #pdfContent1 class="pdf-content">
       <div class="centered">
         <h3>{{ memo.title }}</h3>
         <p><strong>Fecha:</strong> {{ memo.date }} <strong> Hora:</strong> {{ memo.time }}</p>
-        <p><strong>Para:</strong> {{ memo.sucursal }} {{ memo.encargado }}</p>
-        <p><strong>De:</strong> {{ memo.dirigidoD }} {{ memo.encargadoD }}</p>
-        <p><strong>Asunto:</strong> {{ memo.content }}</p>
+        <p><strong>Para:</strong> {{ memo.sucursal }} - {{ memo.encargado }}</p>
+        <p><strong>De:</strong> {{ memo.dirigidoD }} - {{ memo.encargadoD }}</p>
+        <p><strong>Asunto:</strong> </p>
+        <pre>{{ formattedContent }}</pre>
         <div *ngIf="showAdditionalField">
           <p><strong>Campo Adicional:</strong> {{ memo.additionalField }}</p>
         </div>
+        <!-- Mostrar solo los checkboxes marcados y su contenido -->
+    <div *ngIf="memo.additionalField === 'Documentos'">
+      <p><strong>Documentos Adicionales:</strong></p>
+      <ul>
+        <li *ngIf="memo.reporteCaja"><input type="checkbox" checked disabled>Reporte de Caja: {{ memo.reporteCaja }}</li>
+        <li *ngIf="memo.notaPedido"><input type="checkbox" checked disabled>Nota de Pedido: {{ memo.notaPedido }}</li>
+        <li *ngIf="memo.formularioDevolucion"><input type="checkbox" checked disabled>Formulario de Devolución de Mercadería: {{ memo.formularioDevolucion }}</li>
+        <li *ngIf="memo.rebornGrande"><input type="checkbox" checked disabled>Reborn Grande: {{ memo.rebornGrande }}</li>
+        <li *ngIf="memo.rebornPequeno"><input type="checkbox" checked disabled>Reborn Pequeño: {{ memo.rebornPequeno }}</li>
+        <li *ngIf="memo.rolloPrecio"><input type="checkbox" checked disabled>Rollo de Precio: {{ memo.rolloPrecio }}</li>
+        <li *ngIf="memo.rolloSeguridad"><input type="checkbox" checked disabled>Rollo de Seguridad: {{ memo.rolloSeguridad }}</li>
+      </ul>
+    </div>
+    <div *ngIf="memo.additionalField === 'Activos'" class="form-group">
+      <p>Tecnitaser: {{ memo.tecnitaser }}</p>
+      <p>Marca: {{ memo.marca }}</p>
+      <p>Descripción: {{ memo.descripcion }}</p>
+      <p>Número de Serie: {{ memo.numeroSerie }}</p>
+      <p>Estado Activo: {{ memo.estado }}</p>
+      <p>Cargador: {{ memo.cargador }}</p>
+    </div>
+    <div class="inline-blocks">
+      <div class="inline-block">
+        <p>Entregado por:</p>
+        <p>---------------------</p>
+      </div>
+
+      <div class="inline-block">
+        <p>Recibido por:</p>
+        <p>---------------------</p>
+      </div>
+    </div>
+
       </div>
     </div>
 
@@ -137,11 +172,47 @@
         <p><strong>Fecha:</strong> {{ memo.date }} <strong> Hora:</strong> {{ memo.time }}</p>
         <p><strong>Para:</strong> {{ memo.sucursal }} {{ memo.encargado }}</p>
         <p><strong>De:</strong> {{ memo.dirigidoD }} {{ memo.encargadoD }}</p>
-        <p><strong>Asunto:</strong> {{ memo.content }}</p>
+        <p><strong>Asunto:</strong> </p>
+        <pre>{{ formattedContent }}</pre>
         <div *ngIf="showAdditionalField">
           <p><strong>Campo Adicional:</strong> {{ memo.additionalField }}</p>
         </div>
+        <!-- Mostrar solo los checkboxes marcados y su contenido -->
+    <div *ngIf="memo.additionalField === 'Documentos'">
+      <p><strong>Documentos Adicionales:</strong></p>
+      <ul>
+        <li *ngIf="memo.reporteCaja"><input type="checkbox" checked disabled>Reporte de Caja: {{ memo.reporteCaja }}</li>
+        <li *ngIf="memo.notaPedido"><input type="checkbox" checked disabled>Nota de Pedido: {{ memo.notaPedido }}</li>
+        <li *ngIf="memo.formularioDevolucion"><input type="checkbox" checked disabled>Formulario de Devolución de Mercadería: {{ memo.formularioDevolucion }}</li>
+        <li *ngIf="memo.rebornGrande"><input type="checkbox" checked disabled>Reborn Grande: {{ memo.rebornGrande }}</li>
+        <li *ngIf="memo.rebornPequeno"><input type="checkbox" checked disabled>Reborn Pequeño: {{ memo.rebornPequeno }}</li>
+        <li *ngIf="memo.rolloPrecio"><input type="checkbox" checked disabled>Rollo de Precio: {{ memo.rolloPrecio }}</li>
+        <li *ngIf="memo.rolloSeguridad"><input type="checkbox" checked disabled>Rollo de Seguridad: {{ memo.rolloSeguridad }}</li>
+      </ul>
+    </div>
+    <div *ngIf="memo.additionalField === 'Activos'" class="form-group">
+      <p>Tecnitaser: {{ memo.tecnitaser }}</p>
+      <p>Marca: {{ memo.marca }}</p>
+      <p>Descripción: {{ memo.descripcion }}</p>
+      <p>Número de Serie: {{ memo.numeroSerie }}</p>
+      <p>Estado Activo: {{ memo.estado }}</p>
+      <p>Cargador: {{ memo.cargador }}</p>
+    </div>
+    <div class="inline-blocks">
+      <div class="inline-block">
+        <p>Entregado por:</p>
+        <p>---------------------</p>
+      </div>
+
+      <div class="inline-block">
+        <p>Recibido por:</p>
+        <p>---------------------</p>
+      </div>
+    </div>
+
       </div>
     </div>
   </div>
+
 </div>
+
