@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private router: Router) {}
 
   login(username: string, password: string): boolean {
-    if (username === 'aramirez' && password === 'piecito') {
+    if (username === 'alex' && password === 'piecito') {
       this.isAuthenticated = true;
       this.router.navigate(['/memo']);
       return true;
