@@ -48,7 +48,7 @@ export class MemoComponent implements OnInit {
   mostrarEncargadoD = false;
   isEncargadoEditable = false; // Added to control the readonly attribute of encargado input
   isEncargadoEditable2 = false; // Added to control the readonly attribute of encargadoD input
-
+  formattedContent  = '';
   private encargados: { [key: string]: string } = {
     'Marketing': 'Ing. Alex Gordon',
     'Dilipa Villaflora': 'Sr. John Yanez',
@@ -79,6 +79,29 @@ export class MemoComponent implements OnInit {
 
   ngOnInit(): void {
     this.setDateTime();
+    this.formattedContent = this.formatContent(this.memo.content);
+  }
+  onInput(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    this.memo.content = textarea.value;
+    this.formattedContent = this.formatContent(this.memo.content);
+  }
+
+  formatContent(content: string): string {
+    const maxLength = 40;
+    let formatted = '';
+    let lineLength = 0;
+
+    for (const char of content) {
+      formatted += char;
+      lineLength++;
+      if (lineLength >= maxLength) {
+        formatted += '\n';
+        lineLength = 0;
+      }
+    }
+
+    return formatted;
   }
 
   setDateTime(): void {
@@ -126,24 +149,57 @@ export class MemoComponent implements OnInit {
 
     const canvasPromises = data.map((element: any) => {
       return html2canvas(element, {
-        scrollX: 0,
+        scrollX: 5,
         scrollY: 0,
-        width: 260, // Width of the A4 page in mm
-        height: 320, // Height of the A4 page in mm
+        width: 420, // Width
+        height: 500, // Height
         backgroundColor: '#fff'
       });
     });
 
     Promise.all(canvasPromises)
       .then((canvases) => {
-        const pdf = new jspdf.jsPDF('landscape', 'mm', 'a2');
+        const pdf = new jspdf.jsPDF('landscape', 'mm', 'a4');
+
         let xOffset = 0;
         canvases.forEach((canvas, index) => {
           const imgData = canvas.toDataURL('image/png');
           pdf.addImage(imgData, 'PNG', xOffset, 0,150, 200); // A4 size
-          xOffset += 300; // Assuming each canvas is A4 width
+          xOffset += 150; // Assuming each canvas is A4 width
         });
         pdf.save('memo.pdf');
+        const currentDate = this.memo.date;
+        const currentTime = this.memo.time;
+        // Restablecer todos los campos del memo a cadenas vacías después de guardar el PDF
+        this.memo = {
+          title: 'Memo Dilipa',
+          content: '',
+          recipient: '',
+          encargado: '',
+          encargadoD: '',
+          sucursal: '',
+          location: '',
+          branch: '',
+          additionalField: '',
+          dirigidoD: '',
+          date: currentDate,
+          time: currentTime,
+          tecnitaser: '',
+          marca: '',
+          descripcion: '',
+          numeroSerie: '',
+          estado: '',
+          cargador: '',
+          reporteCaja: '',
+          notaPedido: '',
+          formularioDevolucion: '',
+          rebornGrande: '',
+          rebornPequeno: '',
+          rolloPrecio: '',
+          rolloSeguridad: '',
+        };
+        // Restablecer los campos de texto con ngModel a cadenas vacías también
+        this.formattedContent = '';
       })
       .catch((error) => {
         console.error('Error al generar la imagen:', error);
