@@ -13,7 +13,16 @@
   margin-bottom: 5px;
   display: block;
 }
-
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: none;
+}
 .form-group input[type="text"],
 .form-group select,
 .form-group textarea {
@@ -31,7 +40,13 @@
   margin: 5px 0;
   box-sizing: border-box;
 }
+.inline-blocks {
+  display: flex; /* Utiliza flexbox para mostrar los elementos en línea */
+}
 
+.inline-block {
+  margin-right: 20px; /* Espacio entre los elementos */
+}
 .pdf-content-copy {
   position: absolute;
   top: -10000px;
