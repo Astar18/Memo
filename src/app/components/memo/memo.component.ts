@@ -1,6 +1,38 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import { MemoService } from '../../service/memo.service';
+
+
+export interface Memo {
+  id?: number;
+  title: string;
+  content: string;
+  recipient: string;
+  encargado: string;
+  encargadoD: string;
+  sucursal: string;
+  location: string;
+  branch: string;
+  additionalField: string;
+  dirigidoD: string;
+  date: string;
+  time: string;
+  tecnitaser: string;
+  marca: string;
+  descripcion: string;
+  numeroSerie: string;
+  estado: string;
+  cargador: string;
+  reporteCaja: string;
+  notaPedido: string;
+  formularioDevolucion: string;
+  rebornGrande: string;
+  rebornPequeno: string;
+  rolloPrecio: string;
+  rolloSeguridad: string;
+}
 
 @Component({
   selector: 'app-memo',
@@ -13,7 +45,7 @@ export class MemoComponent implements OnInit {
   @ViewChild('pdfContent2')
   pdfContent2!: ElementRef;
 
-  memo = {
+  memo: Memo ={
     title: 'Memo Dilipa',
     content: '',
     recipient: '',
@@ -41,6 +73,7 @@ export class MemoComponent implements OnInit {
     rolloSeguridad: '',
   };
 
+  memos: Memo[] = [];
   showAdditionalField = false;
   showAdditionalFieldForSistemas = false;
   showAdditionalFieldForActivos = false;
@@ -75,12 +108,12 @@ export class MemoComponent implements OnInit {
     'Otros': ''
   };
 
-  constructor() { }
+  constructor(@Inject(MemoService) private memoService: MemoService) { }
 
   ngOnInit(): void {
     this.setDateTime();
-    this.formattedContent = this.formatContent(this.memo.content);
   }
+
   onInput(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
     this.memo.content = textarea.value;
@@ -121,6 +154,7 @@ export class MemoComponent implements OnInit {
       this.isEncargadoEditable = false;
     }
     this.mostrarEncargado = !!this.memo.encargado || this.isEncargadoEditable;
+
   }
 
   onDirigido(event: any): void {
@@ -142,7 +176,88 @@ export class MemoComponent implements OnInit {
     const branch = event.target.value;
     this.memo.branch = branch;
     this.showAdditionalField = branch === 'specificBranch';
+
   }
+  crearMemo(): void {
+    if (!this.memo.title || !this.memo.content || !this.memo.recipient) {
+      alert('Falta completar campos obligatorios');
+      return;
+    }
+
+    this.memoService.crearMemo(this.memo).subscribe(
+      (data: Memo) => {
+        this.memos.push(data);
+        this.resetMemo();
+      },
+      (error) => {
+        console.error('Error al crear el memo:', error);
+      }
+    );
+  }
+
+  actualizarMemo(memo: Memo): void {
+    if (!memo.title || !memo.content || !memo.recipient) {
+      alert('Falta completar campos obligatorios');
+      return;
+    }
+
+    this.memoService.actualizarMemo(memo).subscribe(
+      (data: Memo) => {
+        const index = this.memos.findIndex(m => m.id === memo.id);
+        this.memos[index] = data;
+        this.resetMemo();
+      },
+      (error) => {
+        console.error('Error al actualizar el memo:', error);
+      }
+    );
+  }
+
+  eliminarMemo(id: number): void {
+    this.memoService.eliminarMemo(id).subscribe(
+      () => {
+        this.memos = this.memos.filter(m => m.id !== id);
+      },
+      (error) => {
+        console.error('Error al eliminar el memo:', error);
+      }
+    );
+  }
+  resetMemo(): void {
+    const currentDate = this.memo.date;
+    const currentTime = this.memo.time;
+    this.memo = {
+      title: 'Memo Dilipa',
+      content: '',
+      recipient: '',
+      encargado: '',
+      encargadoD: '',
+      sucursal: '',
+      location: '',
+      branch: '',
+      additionalField: '',
+      dirigidoD: '',
+      date: currentDate,
+      time: currentTime,
+      tecnitaser: '',
+      marca: '',
+      descripcion: '',
+      numeroSerie: '',
+      estado: '',
+      cargador: '',
+      reporteCaja: '',
+      notaPedido: '',
+      formularioDevolucion: '',
+      rebornGrande: '',
+      rebornPequeno: '',
+      rolloPrecio: '',
+      rolloSeguridad: ''
+    };
+    this.formattedContent = '';
+  }
+
+
+
 
   printMemo(): void {
     const data = [this.pdfContent1.nativeElement, this.pdfContent2.nativeElement];
