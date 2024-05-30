@@ -1,9 +1,9 @@
 <div id="memo-container" class="memo-container">
   <form (ngSubmit)="printMemo()">
-    <h1>Memo</h1>
+    <h1 class="tituloM">Memo</h1>
       <div class="form-group">
     <label for="sucursal">Dirigido a Sucursal o Departamento:</label>
-    <select id="sucursal" [(ngModel)]="memo.sucursal" name="sucursal" (change)="onSucursal($event)">
+    <select id="sucursal" class="inputs"[(ngModel)]="memo.sucursal" name="sucursal" (change)="onSucursal($event) ">
       <option value="Dilipa Villaflora">Sur</option>
       <option value="Dilipa Carrión">Carrión</option>
       <option value="Dilipa Portoviejo">Portoviejo</option>
@@ -29,14 +29,14 @@
       <option value="Otros">Otro</option>
     </select>
   </div>
-    <div *ngIf="mostrarEncargado" class="form-group">
+    <div *ngIf="mostrarEncargado" class="form-group ">
       <label for="encargado">Encargado:</label>
-      <input id="encargado" [(ngModel)]="memo.encargado" name="encargado" type="text"
+      <input id="encargado" class="inputs"[(ngModel)]="memo.encargado" name="encargado" type="text"
         [readonly]="!isEncargadoEditable" />
     </div>
     <div class="form-group">
     <label for="dirigidoD">De Sucursal o Departamento:</label>
-    <select id="dirigidoD" [(ngModel)]="memo.dirigidoD" name="dirigidoD" (change)="onDirigido($event)">
+    <select id="dirigidoD" class="inputs"[(ngModel)]="memo.dirigidoD" name="dirigidoD" (change)="onDirigido($event)">
       <option value="Dilipa Villaflora">Sur</option>
       <option value="Dilipa Carrión">Carrión</option>
       <option value="Dilipa Portoviejo">Portoviejo</option>
@@ -62,15 +62,15 @@
       <option value="Otros">Otro</option>
     </select>
   </div>
-    <div *ngIf="mostrarEncargadoD" class="form-group">
+    <div *ngIf="mostrarEncargadoD" class="form-group ">
       <label for="additionalField2">Encargado:</label>
-      <input id="additionalField2" [(ngModel)]="memo.encargadoD" name="additionalField2" type="text"
+      <input id="additionalField2" class="inputs" [(ngModel)]="memo.encargadoD" name="additionalField2" type="text"
         [readonly]="!isEncargadoEditable2" />
     </div>
 
-    <div *ngIf="showAdditionalFieldForSistemas" class="form-group">
+    <div *ngIf="showAdditionalFieldForSistemas" class="form-group ">
       <label for="additionalFieldForSistemas">Tipo:</label>
-      <select id="additionalFieldForSistemas" [(ngModel)]="memo.additionalField" name="additionalFieldForSistemas">
+      <select id="additionalFieldForSistemas" class="inputs"[(ngModel)]="memo.additionalField" name="additionalFieldForSistemas">
         <option value="Activos">Activos</option>
         <option value="Documentos">Documentos</option>
       </select>
@@ -78,34 +78,34 @@
 
     <div *ngIf="memo.additionalField === 'Activos'" class="form-group">
       <label for="tecnitaser">Tecnitaser:</label>
-      <input id="tecnitaser" [(ngModel)]="memo.tecnitaser" name="tecnitaser" type="text">
+      <input id="tecnitaser" class="inputs"[(ngModel)]="memo.tecnitaser" name="tecnitaser" type="text">
       <label for="marca">Marca:</label>
-      <input id="marca" [(ngModel)]="memo.marca" name="marca" type="text">
+      <input id="marca" class="inputs"[(ngModel)]="memo.marca" name="marca" type="text">
       <label for="descripcion">Descripción:</label>
-      <input id="descripcion" [(ngModel)]="memo.descripcion" name="descripcion" type="text">
+      <input id="descripcion" class="inputs" [(ngModel)]="memo.descripcion" name="descripcion" type="text">
       <label for="numeroSerie">Número de Serie:</label>
-      <input id="numeroSerie" [(ngModel)]="memo.numeroSerie" name="numeroSerie" type="text">
+      <input id="numeroSerie" class="inputs" [(ngModel)]="memo.numeroSerie" name="numeroSerie" type="text">
       <label for="estado">Estado Activo:</label>
-      <input id="estado" [(ngModel)]="memo.estado" name="estado" type="text">
+      <input id="estado" class="inputs" [(ngModel)]="memo.estado" name="estado" type="text">
       <label for="cargador">Cargador:</label>
-      <input id="cargador" [(ngModel)]="memo.cargador" name="cargador" type="text">
+      <input id="cargador" class="inputs"[(ngModel)]="memo.cargador" name="cargador" type="text">
     </div>
 
     <div *ngIf="memo.additionalField === 'Documentos'" class="form-group">
       <label for="reporteCaja"><input type="checkbox"/>Reporte de Caja:</label>
-      <input id="reporteCaja" [(ngModel)]="memo.reporteCaja" name="reporteCaja" type="text">
+      <input id="reporteCaja" class="inputs"[(ngModel)]="memo.reporteCaja" name="reporteCaja" type="text">
       <label for="notaPedido"><input type="checkbox" />Nota de Pedido:</label>
-      <input id="notaPedido" [(ngModel)]="memo.notaPedido" name="notaPedido" type="text">
+      <input id="notaPedido" class="inputs" [(ngModel)]="memo.notaPedido" name="notaPedido" type="text">
       <label for="formularioDevolucion"><input type="checkbox" />Formulario de Devolución de Mercadería:</label>
-      <input id="formularioDevolucion" [(ngModel)]="memo.formularioDevolucion" name="formularioDevolucion" type="text">
+      <input id="formularioDevolucion" class="inputs" [(ngModel)]="memo.formularioDevolucion" name="formularioDevolucion" type="text">
       <label for="rebornGrande"><input type="checkbox" />Reborn Grande:</label>
-      <input id="rebornGrande" [(ngModel)]="memo.rebornGrande" name="rebornGrande" type="text">
+      <input id="rebornGrande" class="inputs"[(ngModel)]="memo.rebornGrande" name="rebornGrande" type="text">
       <label for="rebornPequeno"><input type="checkbox" />Reborn Pequeño:</label>
-      <input id="rebornPequeno" [(ngModel)]="memo.rebornPequeno" name="rebornPequeno" type="text">
+      <input id="rebornPequeno" class="inputs" [(ngModel)]="memo.rebornPequeno" name="rebornPequeno" type="text">
       <label for="rolloPrecio"><input type="checkbox" />Rollo de Precio:</label>
-      <input id="rolloPrecio" [(ngModel)]="memo.rolloPrecio" name="rolloPrecio" type="text">
+      <input id="rolloPrecio" class="inputs" [(ngModel)]="memo.rolloPrecio" name="rolloPrecio" type="text">
       <label for="rolloSeguridad"><input type="checkbox" />Rollo de Seguridad:</label>
-      <input id="rolloSeguridad" [(ngModel)]="memo.rolloSeguridad" name="rolloSeguridad" type="text">
+      <input id="rolloSeguridad" class="inputs"[(ngModel)]="memo.rolloSeguridad" name="rolloSeguridad" type="text">
     </div>
     <!-- Campo Input asunto -->
     <div class="form-group">
@@ -113,12 +113,20 @@
       <textarea id="content" [(ngModel)]="memo.content" name="content" (input)="onInput($event)" ></textarea>
     </div>
 
+    
+    
 
-    <button type="button" (click)="printMemo()">Generar PDF</button>
   </form>
-  <div class="pdf-container">
-    <!-- Contenido original -->
-    <div id="pdf-content-left" #pdfContent1 class="pdf-content">
+
+  <div class="btnMemo">
+    <button type="button" class="button-57" (click)="printMemo()"><span class="text">Generar PDF</span><span>Piecito</span></button>
+  </div>
+
+
+  <div class="">
+    <div class="pdf-container">
+       <!-- Contenido original -->
+    <div id="pdf-content-left" #pdfContent1 class="pdf-contet-original">
       <div class="centered">
         <h3>{{ memo.title }}</h3>
         <p><strong>Fecha:</strong> {{ memo.date }} <strong> Hora:</strong> {{ memo.time }}</p>
@@ -130,6 +138,8 @@
           <p><strong>Campo Adicional:</strong> {{ memo.additionalField }}</p>
         </div>
         <!-- Mostrar solo los checkboxes marcados y su contenido -->
+        </div>
+    
     <div *ngIf="memo.additionalField === 'Documentos'">
       <p><strong>Documentos Adicionales:</strong></p>
       <ul>
@@ -153,20 +163,20 @@
     <div class="inline-blocks">
       <div class="inline-block">
         <p>Entregado por:</p>
-        <p>---------------------</p>
+        <p>----------------</p>
       </div>
 
       <div class="inline-block">
         <p>Recibido por:</p>
-        <p>---------------------</p>
+        <p>----------------</p>
       </div>
     </div>
 
       </div>
-    </div>
+    
 
     <!-- Copia del contenido -->
-    <div id="pdf-content-right" #pdfContent2 class="pdf-content pdf-content-copy">
+    <div id="pdf-content-right" #pdfContent2 class="pdf-content-copy">
       <div class="centered">
         <h3>{{ memo.title }}</h3>
         <p><strong>Fecha:</strong> {{ memo.date }} <strong> Hora:</strong> {{ memo.time }}</p>
@@ -201,19 +211,22 @@
     <div class="inline-blocks">
       <div class="inline-block">
         <p>Entregado por:</p>
-        <p>---------------------</p>
+        <p>----------------</p>
       </div>
 
       <div class="inline-block">
         <p>Recibido por:</p>
-        <p>---------------------</p>
+        <p>----------------</p>
+      </div>
+    
+  </div>
       </div>
     </div>
+    </div>
+   
 
-      </div>
-    </div>
   </div>
 
-
 </div>
+
 
