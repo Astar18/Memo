@@ -1,17 +1,22 @@
 .login-container {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #eeeeee;
-}
-.imagen {
-  display: block;
+  display: flexbox;
+  max-width: 30%;
+  max-height: 100%;
   margin-left: auto;
   margin-right: auto;
-  width: 350px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #525252;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #525252;
+  text-align: center;
+}
+.imagen {
+  display: flexbox;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 360px;
   height: 100px;
   border-color: #464240;
   border-radius: 15px;
@@ -19,10 +24,12 @@
 h2 {
   text-align: center;
   margin-bottom: 15px;
+  color: #ccc;
 }
 
 .form-group {
   margin-bottom: 15px;
+  
 }
 .container {
   display: flex;
@@ -35,18 +42,26 @@ h2 {
   width: 48%;
 }
 label {
-  display: block;
+  display: flexbox;
   margin-bottom: 5px;
   font-weight: bold;
-  background-color: #eeeeee;
+  color: #ccc;
+  text-align: center;
+}
+.inputsL{
+  text-align: center;
+
 }
 
 input[type="text"],
 input[type="password"] {
+  text-align: center;
   width: 90%;
+  height: 90%;
   padding: 10px;
-  border: 5px solid #ccc;
+  border: 5px solid #413e3e;
   border-radius: 5px;
+  background-color: #413e3e;
 }
 
 .no-background {
@@ -57,9 +72,9 @@ input[type="password"] {
 }
 
 .btn {
-  width: 95%;
+  width: 100%;
   padding: 10px;
-  background-color: #464240;
+  background-color: #424242;
   color: white;
   border: none;
   border-radius: 5px;
@@ -68,11 +83,11 @@ input[type="password"] {
 }
 
 .btn:hover {
-  background-color: #967d6c;
+  background-color: #666464;
 }
 
 .error-message {
   margin-top: 15px;
-  color: red;
+  color: rgb(158, 16, 16);
   text-align: center;
 }
