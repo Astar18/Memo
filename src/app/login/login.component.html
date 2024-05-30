@@ -3,12 +3,12 @@
   <h2>CONTROL INTERNO DE DOCUMENTOS</h2>
   <form (ngSubmit)="login()">
     <div class="form-group">
-      <label for="username">Usuario:</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+      <label for="username" class="inputsL">Usuario:</label>
+      <input type="text" id="username" class="inputL"[(ngModel)]="username" name="username" required>
     </div>
-    <div class="form-group">
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
+    <div class="form-group ">
+      <label for="password" class="inputsL" >Contraseña:</label>
+      <input type="password" id="password" class="inputL"[(ngModel)]="password" name="password" required>
     </div>
     <button type="submit" class="btn">Ingresar</button>
   </form>
