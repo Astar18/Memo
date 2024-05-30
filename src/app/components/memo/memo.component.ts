@@ -91,7 +91,7 @@ export class MemoComponent implements OnInit {
     'Centro de Acopio': 'Sr. Miguel Yepez',
     'Dilipa Oficinas': 'Sra. Josselyn Chavez',
     'Dilipa Santa Clara': 'Sr. Rolando Galarza',
-    'Dilipa Tumbaco': 'Sra. Mariana Llumihucsi',
+    'Dilipa Tumbaco 1': 'Sra. Mariana Llumihucsi',
     'Dilipa Tumbaco 2': 'Sra. Maria Llumihucsi',
     'Dilipa Ambato': 'Sra. Maria Eugenia Andrade',
     'Dilipa Ibarra': 'Sr. Jorge Perez',
@@ -276,11 +276,11 @@ export class MemoComponent implements OnInit {
       .then((canvases) => {
         const pdf = new jspdf.jsPDF('landscape', 'mm', 'a4');
 
-        let xOffset = 0;
+        let xOffset = 10;
         canvases.forEach((canvas, index) => {
           const imgData = canvas.toDataURL('image/png');
           pdf.addImage(imgData, 'PNG', xOffset, 0,150, 200); // A4 size
-          xOffset += 150; // Assuming each canvas is A4 width
+          xOffset += 148; // Assuming each canvas is A4 width
         });
         pdf.save('memo.pdf');
         const currentDate = this.memo.date;
